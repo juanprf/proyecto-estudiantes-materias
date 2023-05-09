@@ -5,7 +5,7 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>Students</h1>
-                <a href="{{ route('students.create') }}" class="btn btn-primary mb-3">Add Student</a>
+                <a href="{{ route('student-lesson.create') }}" class="btn btn-primary mb-3">Vincular estudiante y materia</a>
                 <table class="table">
                     <thead>
                         <tr>
