@@ -21,9 +21,9 @@
                                         <td>{{ $lesson->id }}</td>
                                         <td>{{ $lesson->name }}</td>
                                         <td>
-                                            <a href="{{ route('lessons.show', $lesson->id) }}" class="btn btn-sm btn-primary">View</a>
-                                            <a href="{{ route('lessons.edit', $lesson->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                                            <form action="{{ route('lessons.destroy', $lesson->id) }}" method="POST" style="display: inline-block;">
+                                            <a href="{{ route('lesson.show', $lesson->id) }}" class="btn btn-sm btn-primary">View</a>
+                                            <a href="{{ route('lesson.edit', $lesson->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                                            <form action="{{ route('lesson.destroy', $lesson->id) }}" method="POST" style="display: inline-block;">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this student?')">Delete</button>

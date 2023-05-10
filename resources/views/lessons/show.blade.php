@@ -9,8 +9,8 @@
                     <div class="card-body">
                         <p>ID: {{ $lesson->id }}</p>
 
-                        <a href="{{ route('lessons.edit', $lesson->id) }}" class="btn btn-sm btn-warning">Edit</a>
-                        <form action="{{ route('lessons.destroy', $lesson->id) }}" method="POST" style="display: inline-block;">
+                        <a href="{{ route('lesson.edit', $lesson->id) }}" class="btn btn-sm btn-warning">Edit</a>
+                        <form action="{{ route('lesson.destroy', $lesson->id) }}" method="POST" style="display: inline-block;">
                             @csrf
                             @method('DELETE')
                             <button type="submit" class="btn btn-sm btn-danger">Delete</button>

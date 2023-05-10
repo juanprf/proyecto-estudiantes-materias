@@ -8,11 +8,18 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Lesson extends Model
 {
-
     use HasFactory;
+
+    protected $fillable = [
+        'name',
+    ];
+
+    protected $with = [
+        
+    ];
 
     public function students(): BelongsToMany
     {
-        return $this->belongsToMany(Student::class, 'student_lessons')->withTimestamps();
+        return $this->belongsToMany(Student::class,'student_lessons','lesson_id','student_id')->orderBy('students.name');
     }
 }

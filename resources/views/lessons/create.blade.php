@@ -7,7 +7,7 @@
                 <div class="card">
                     <div class="card-header">New Lesson</div>
                     <div class="card-body">
-                        <form method="POST" action="{{ route('lessons.store') }}">
+                        <form method="POST" action="{{ route('lesson.store') }}">
                             @csrf
 
                             <div class="form-group">

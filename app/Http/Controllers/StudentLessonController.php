@@ -6,58 +6,38 @@ use Illuminate\Http\Request;
 use App\Models\StudenttLesson;
 use App\Models\Student;
 use App\Models\Lesson;
+use Illuminate\Support\Facades\DB;
 
 class StudentLessonController extends Controller
 {
-
-
-    public function index()
-{
-    // Obtener todos los registros de student_lessons de la base de datos
-    $studentLessons = StudenttLesson::all();
-
-    // Retornar la vista con los datos de student_lessons
-    return view('student_lesson.index', compact('studentLessons'));
-}
-
-
-
-        public function create()
+    public function store(Student $student, Lesson $lesson)
     {
-        $students = Student::all();
-        $lessons = Lesson::all();
-
-        return view('student_lesson.create', compact('students', 'lessons'));
+        return DB::transaction(function()use($student,$lesson){
+            $student->lessons()->sync($lesson->id,false);
+            return redirect()->back()->with('success', 'Asignación realiada correctamente');
+        });
     }
 
-
-        public function show(StudenttLesson $studentLesson)
+    public function studentDestroy(Student $student, Lesson $lesson)
     {
-        // Obtener los datos de la relación de estudiante y materia
-        $student = $studentLesson->student;
-        $lesson = $studentLesson->lesson;
-
-        // Pasar los datos a la vista
-        return view('student_lesson.show', compact('studentLesson', 'student', 'lesson'));
+        return DB::transaction(function()use($student,$lesson){
+            if($student->lessons()->where('lesson_id',$lesson->id)->exists()){
+                $student->lessons()->detach($lesson->id);
+                return redirect()->back()->with('success', 'Asignación eliminada correctamente');
+            }
+            return redirect()->back()->with('success', 'La asignación ya no se encuentra activa');
+        });
     }
 
-
-
-    public function store(Request $request)
-
+    public function lessonDestroy(Student $student, Lesson $lesson)
     {
-        $request->validate([
-            'student_id' => 'required|exists:students,id',
-            'lesson_id' => 'required|exists:lessons,id'
-        ]);
-
-        $studentLesson = new StudenttLesson();
-        $studentLesson->student_id = $request->student_id;
-        $studentLesson->lesson_id = $request->lesson_id;
-        $studentLesson->save();
-
-        return redirect()->route('student-lesson.create')->with('success', 'Vinculación creada correctamente');
+        return DB::transaction(function()use($student,$lesson){
+            if($lesson->students()->where('student_id',$student->id)->exists()){
+                $lesson->students()->detach($student->id);
+                return redirect()->back()->with('success', 'Asignación eliminada correctamente');
+            }
+            return redirect()->back()->with('success', 'La asignación ya no se encuentra activa');
+        });
     }
-
 
 }

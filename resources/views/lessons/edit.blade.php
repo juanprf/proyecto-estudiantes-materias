@@ -8,7 +8,7 @@
                     <div class="panel-heading">Edit Lesson</div>
     
                     <div class="panel-body">
-                        <form class="form-horizontal" method="POST" action="{{ route('lessons.update', $lesson->id) }}">
+                        <form class="form-horizontal" method="POST" action="{{ route('lesson.update', $lesson->id) }}">
                             {{ csrf_field() }}
                             {{ method_field('PUT') }}
     

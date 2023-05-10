@@ -3,17 +3,25 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Student extends Model
 {
-    
     use HasFactory;
 
-    public function lessons(): HasMany
+    protected $fillable = [
+        'name',
+        'email',
+    ];
+
+    protected $hidden = [
+        'password'
+    ];
+
+    public function lessons(): BelongsToMany
     {
-        return $this->hasMany(Lesson::class, 'student_lessons');
+        return $this->belongsToMany(Lesson::class,'student_lessons','student_id','lesson_id')->orderBy('lessons.name');
     }
 }
 
